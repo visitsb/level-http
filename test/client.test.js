@@ -1,10 +1,10 @@
-var multilevel = require('..')
-var server = multilevel.server(__dirname + '/client.test.db')
+var levelhttp = require('..')
+var server = levelhttp.server(__dirname + '/client.test.db')
 var JSONStream = require('JSONStream')
 var should = require('should')
 var fs = require('fs.extra')
 
-server.listen(5001)
+server.listen(3001)
 
 beforeEach(function (done) {
   server.db.close().then(() => {
@@ -14,7 +14,7 @@ beforeEach(function (done) {
   })
 })
 
-var db = multilevel.client('http://localhost:5001/')
+var db = levelhttp.client('http://localhost:3001/')
 
 describe('client', function () {
   describe('db#put(key, value)', function () {
