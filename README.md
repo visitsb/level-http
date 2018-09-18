@@ -1,19 +1,19 @@
-# multilevel-http2
+# multilevel2-http
 
-_Access a leveldb instance from multiple processes via HTTP._
+_Access a leveldb instance from multiple processes over HTTP._
 
-A limitation of LevelDB is that only one process is allowed access to the underlying data. **multilevel-http2** exports a LevelDB instance over http.
+A limitation of LevelDB is that only one process is allowed access to the underlying data. **multilevel2-http** exports a LevelDB instance over http.
 
-Credits go to the [original project](https://github.com/juliangruber/multimultilevel-http2). The project is updated to work with latest version of [Level](https://github.com/Level/level) and [NodeJS](https://nodejs.org/en/) with a few minor tweaks.
+Credits go to the [original project](https://github.com/juliangruber/multimultilevel2-http). The project is updated to work with latest version of [Level](https://github.com/Level/level) and [NodeJS](https://nodejs.org/en/) with a few minor tweaks.
 
 **Note**: Project was renamed to publish under npm registry with an easy to remember name.
 
-[![Build Status](https://travis-ci.org/visitsb/multilevel-http2.png)](https://travis-ci.org/visitsb/multilevel-http2)
+[![Build Status](https://travis-ci.org/visitsb/multilevel2-http.png)](https://travis-ci.org/visitsb/multilevel2-http)
 
 ## Installation
 
 ```bash
-npm install multilevel-http2
+npm install multilevel2-http
 ```
 
 ## API
@@ -21,20 +21,20 @@ npm install multilevel-http2
 Server:
 
 ```js
-var multilevelhttp2 = require('multilevel-http2')
+var multilevel2 = require('multilevel2-http')
 // db = levelup instance or path to db
-var server = multilevelhttp2.server(db, options)
+var server = multilevel2.server(db, options)
 server.listen(3000)
 ```
 
 Client:
 
 ```js
-var multilevelhttp2 = require('multilevel-http2')
+var multilevel2 = require('multilevel2-http')
 // or
-import multilevelhttp2 from 'multilevel-http2'
+import multilevel2 from 'multilevel2-http'
 
-var db = multilevelhttp2.client('http://localhost:3000/')
+var db = multilevel2.client('http://localhost:3000/')
 // now you have the complete levelUP api!
 // ...except for events - for those consider level and level-live-stream
 ```
@@ -42,8 +42,8 @@ var db = multilevelhttp2.client('http://localhost:3000/')
 ## CLI
 
 ```bash
-$ sudo npm install -g multilevel-http2
-$ multilevel-http2 -h 127.0.0.1 -p 3000 path/to.db
+$ sudo npm install -g multilevel2-http
+$ multilevel2-http -h 127.0.0.1 -p 3000 path/to.db
 ```
 
 ## HTTP API
@@ -188,7 +188,7 @@ Get all the values in the given range.
 
 ```js
 // server
-var level = require('multilevel-http2')('my.db')
+var level = require('multilevel2-http')('my.db')
 level.listen(3000)
 ```
 
