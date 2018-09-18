@@ -1,7 +1,7 @@
 var should = require('should')
 var request = require('supertest')
 var fs = require('fs.extra')
-var levelhttp = require('..')
+var multilevelhttp2 = require('..')
 
 var app
 
@@ -13,7 +13,7 @@ beforeEach(function (done) {
 })
 
 beforeEach(function () {
-  app = levelhttp.server(__dirname + '/server.test.db', { some: 'meta' })
+  app = multilevelhttp2.server(__dirname + '/server.test.db', { some: 'meta' })
 })
 
 beforeEach(function (done) {

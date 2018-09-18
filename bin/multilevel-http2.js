@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var levelhttp = require('..')
+var multilevelhttp2 = require('..')
 var optimist = require('optimist')
 var express = require('express')
 
@@ -23,6 +23,6 @@ var argv = optimist
 
 if (argv.help || argv._.length != 1) return optimist.showHelp()
 
-levelhttp.server(argv._[0]).listen(argv.port, argv.host, function () {
-  console.log(`level-http listening on ${argv.host}:${argv.port}`)
+multilevelhttp2.server(argv._[0]).listen(argv.port, argv.host, function () {
+  console.log(`multilevel-http2 listening on ${argv.host}:${argv.port}`)
 })

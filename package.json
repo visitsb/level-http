@@ -1,5 +1,5 @@
 {
-  "name": "level-http",
+  "name": "multilevel-http2",
   "version": "1.0.0",
   "description": "Access a leveldb instance from multiple processes over HTTP",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/visitsb/level-http.git"
+    "url": "https://github.com/visitsb/multilevel-http2.git"
   },
   "keywords": [
     "leveldb",
@@ -37,7 +37,7 @@
     "supertest": "^3.3.0"
   },
   "bin": {
-    "level-http": "./bin/level-http.js"
+    "multilevel-http2": "./bin/multilevel-http2.js"
   },
   "engines": {
     "node": ">=8.11"
