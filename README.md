@@ -1,10 +1,11 @@
 # multilevel-http
 
-*Access a leveldb instance from multiple processes via HTTP.*
+_Access a leveldb instance from multiple processes via HTTP._
 
 A limitation of LevelDB is that only one process is allowed access to the underlying data. **multilevel-http** exports a LevelDB instance over http.
+_The original project updated to work with latest version of leveldb and node._
 
-[![Build Status](https://travis-ci.org/juliangruber/multilevel-http.png)](https://travis-ci.org/juliangruber/multilevel-http)
+[![Build Status](https://travis-ci.org/visitsb/multilevel-http.png)](https://travis-ci.org/visitsb/multilevel-http)
 
 ## Installation
 
@@ -17,17 +18,17 @@ npm install multilevel-http
 Server:
 
 ```js
-var multilevel = require('multilevel-http')
+var multilevel = require("multilevel-http");
 // db = levelup instance or path to db
-var server = multilevel.server(db, options)
-server.listen(5000)
+var server = multilevel.server(db, options);
+server.listen(5000);
 ```
 
 Client:
 
 ```js
-var multilevel = require('multilevel-http')
-var db = multilevel.client('http://localhost:5000/')
+var multilevel = require("multilevel-http");
+var db = multilevel.client("http://localhost:3000/");
 // now you have the complete levelUP api!
 // ...except for events - for those consider multilevel and level-live-stream
 ```
@@ -36,7 +37,7 @@ var db = multilevel.client('http://localhost:5000/')
 
 ```bash
 $ sudo npm install -g multilevel-http
-$ multilevel-http -p 5000 path/to.db
+$ multilevel-http -h 127.0.0.1 -p 3000 path/to.db
 ```
 
 ## HTTP API
@@ -67,7 +68,7 @@ Get the value stored at `:key`.
 
 ```js
 // GET /data/foo
-bar
+bar;
 ```
 
 ### POST /data/:key
@@ -76,7 +77,7 @@ Store data at `:key`.
 
 ```js
 // POST /data/foo bar
-"ok"
+"ok";
 ```
 
 ### DEL /data/:key
@@ -85,7 +86,7 @@ Delete data stored at `:key`.
 
 ```js
 // DEL /data/foo
-"ok"
+"ok";
 ```
 
 ### PUT /data
@@ -116,7 +117,7 @@ Get an approximation of disk space used to store the data in the given range.
 
 ```js
 // GET /approximateSize/a..z
-123
+123;
 ```
 
 ### GET /data
@@ -126,10 +127,10 @@ Get all the data.
 ```js
 // GET /data/12
 [
-  { key : 'bar', value : 'baz' },
-  { key : 'foo', value : 'bar' },
+  { key: "bar", value: "baz" },
+  { key: "foo", value: "bar" }
   /* ... */
-]
+];
 ```
 
 ### GET /range/:from..:to
@@ -138,7 +139,7 @@ Get all data in the given range.
 
 ```js
 // GET /range/a..c
-[ { key : 'bar', value : 'baz' } ]
+[{ key: "bar", value: "baz" }];
 ```
 
 ### GET /keys
@@ -147,7 +148,7 @@ Get all the keys.
 
 ```js
 // GET /keys
-[ 'bar', 'foo' ]
+["bar", "foo"];
 ```
 
 ### GET /keys/:from..:to
@@ -156,7 +157,7 @@ Get all the keys in the given range.
 
 ```js
 // GET /keys/a..c
-[ 'bar' ]
+["bar"];
 ```
 
 ### GET /values
@@ -165,7 +166,7 @@ Get all the values.
 
 ```js
 // GET /values
-[ 'baz', 'bar' ]
+["baz", "bar"];
 ```
 
 ### GET /values/:from..:to
@@ -174,15 +175,15 @@ Get all the values in the given range.
 
 ```js
 // GET /values/a..c
-[ 'baz' ]
+["baz"];
 ```
 
 ## Server API
 
 ```js
 // server
-var multilevel = require('multilevel-http')('my.db')
-multilevel.listen(3000)
+var multilevel = require("multilevel-http")("my.db");
+multilevel.listen(3000);
 ```
 
 ### multilevel.server(path|db, meta)
@@ -200,6 +201,7 @@ The stored db and meta data exposed.
 (MIT)
 
 Copyright (c) 2013 Julian Gruber &lt;julian@juliangruber.com&gt;
+Copyright (c) 2018 Shantibhushan Naik &lt;visitsb@gmail.com&gt;
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

@@ -1,15 +1,16 @@
 var multilevel = require('..')
 var server = multilevel.server(__dirname + '/client.test.db')
+var JSONStream = require('JSONStream')
 var should = require('should')
 var fs = require('fs.extra')
 
 server.listen(5001)
 
 beforeEach(function (done) {
-  server.db.close()
-  fs.rmrf(__dirname + '/client.test.db', function () {
-    server.db.open()
-    done()
+  server.db.close().then(() => {
+    fs.rmrf(__dirname + '/client.test.db', function () {
+      server.db.open().then(() => done())
+    })
   })
 })
 
@@ -20,32 +21,32 @@ describe('client', function () {
     it('should store text', function (done) {
       db.put('foo', 'bar', function (err) {
         if (err) return done(err)
-        
+
         db.get('foo', function (err, value) {
           if (err) return done(err)
-          
+
           should.exist(value)
           value.should.equal('bar')
           done()
         })
       })
     })
-    
+
     it('should store json', function (done) {
-      db.put('foo', { some : 'json' }, { encoding : 'json' }, function (err) {
+      db.put('foo', { some: 'json' }, { encoding: 'json' }, function (err) {
         if (err) return done(err)
-        db.get('foo', { encoding : 'json' }, function (err, value) {
+        db.get('foo', { encoding: 'json' }, function (err, value) {
           if (err) return done(err)
-          value.should.eql({ some : 'json' })
+          value.should.eql({ some: 'json' })
           done()
         })
       })
     })
-    
+
     it('should store binary', function (done) {
-      db.put('foo', new Buffer([0, 1]), { encoding : 'binary' }, function (err) {
+      db.put('foo', new Buffer([0, 1]), { encoding: 'binary' }, function (err) {
         if (err) return done(err)
-        db.get('foo', { encoding : 'binary' }, function (err, value) {
+        db.get('foo', { encoding: 'binary' }, function (err, value) {
           if (err) return done(err)
           value.toString().should.equal("\u0000\u0001")
           done()
@@ -53,15 +54,15 @@ describe('client', function () {
       })
     })
   })
-  
+
   describe('db#get(key)', function () {
     it('should get', function (done) {
       db.put('foo', 'bar', function (err) {
         if (err) return done(err)
-        
+
         db.get('foo', function (err, value) {
           if (err) return done(err)
-          
+
           should.exist(value)
           value.should.equal('bar')
           done()
@@ -69,15 +70,15 @@ describe('client', function () {
       })
     })
   })
-  
+
   describe('db#del(key)', function () {
     it('should delete', function (done) {
       db.put('foo', 'bar', function (err) {
         if (err) return done(err)
-        
+
         db.del('foo', function (err) {
           if (err) return done(err)
-          
+
           db.get('foo', function (err, value) {
             should.exist(err)
             should.not.exist(value)
@@ -87,17 +88,17 @@ describe('client', function () {
       })
     })
   })
-  
+
   describe('db#batch(ops, cb)', function () {
     it('should create', function (done) {
       db.batch([
-        { type : 'put', key : 'key', value : 'value' }
+        { type: 'put', key: 'key', value: 'value' }
       ], function (err) {
         if (err) return done(err)
-        
+
         db.get('key', function (err, value) {
           if (err) return done(err)
-          
+
           should.exist(value)
           value.should.equal('value')
           done()
@@ -105,43 +106,43 @@ describe('client', function () {
       })
     })
   })
-  
+
   describe('db#approximateSize(from, to, cb)', function () {
     it('should get a size', function (done) {
       db.approximateSize('a', 'z', function (err, size) {
         if (err) return done(err)
         should.exist(size)
-        size.should.be.a('number')
+        size.should.be.Number
         done()
       })
     })
   })
-  
+
   describe('db#readStream()', function () {
     it('should read', function (done) {
       db.put('foo', 'bar', function (err) {
         if (err) return done(err)
         var count = 0
-        
+
         db.readStream()
-        .on('data', function (data) {
-          count++
-          should.exist(data)
-          data.should.eql({ key : 'foo', value : 'bar' })
-        })
-        .on('error', done)
-        .on('end', function (data) {
-          count.should.equal(1)
-          done()
-        })
+          .on('data', function (data) {
+            count++
+            should.exist(data)
+            data.should.eql({ key: 'foo', value: 'bar' })
+          })
+          .on('error', done)
+          .on('end', function (data) {
+            count.should.equal(1)
+            done()
+          })
       })
     })
   })
-  
+
   describe('db#writeStream()', function () {
     it('should save', function (done) {
       var ws = db.writeStream()
-  
+
       ws.on('end', function () {
         db.get('key', function (err, value) {
           if (err) return done(err)
@@ -150,8 +151,8 @@ describe('client', function () {
           done()
         })
       })
-      
-      ws.write({ key : 'key', value : 'value' })
+
+      ws.write({ key: 'key', value: 'value' })
       ws.end()
     })
   })
