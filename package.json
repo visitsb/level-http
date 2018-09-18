@@ -4,7 +4,7 @@
   "description": "Access a leveldb instance from multiple processes via HTTP",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha"
+    "test": "NODE_ENV=test mocha --exit"
   },
   "repository": {
     "type": "git",
