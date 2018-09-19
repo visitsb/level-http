@@ -1,5 +1,6 @@
-var multilevel2 = require('..')
-var server = multilevel2.server(__dirname + '/client.test.db')
+var multilevel2 = require('../lib/server')
+var client = require('../lib/client.node')
+var server = multilevel2(__dirname + '/client.test.db')
 var should = require('should')
 var fs = require('fs.extra')
 
@@ -13,7 +14,7 @@ beforeEach(function (done) {
   })
 })
 
-var db = multilevel2.clientNode('http://localhost:3001/')
+var db = client('http://localhost:3001/')
 
 describe('client#node', function () {
   describe('db#put(key, value)', function () {

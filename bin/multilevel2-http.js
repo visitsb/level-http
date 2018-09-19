@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var multilevel2 = require('..')
+var multilevel2 = require('../lib/server')
 var optimist = require('optimist')
 var express = require('express')
 
@@ -23,6 +23,6 @@ var argv = optimist
 
 if (argv.help || argv._.length != 1) return optimist.showHelp()
 
-multilevel2.server(argv._[0]).listen(argv.port, argv.host, function () {
+multilevel2(argv._[0]).listen(argv.port, argv.host, function () {
   console.log(`multilevel2-http listening on ${argv.host}:${argv.port}`)
 })

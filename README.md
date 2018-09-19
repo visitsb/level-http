@@ -21,9 +21,9 @@ npm install multilevel2-http
 Server:
 
 ```js
-var multilevel2 = require('multilevel2-http')
+var multilevel2 = require('multilevel2-http/lib/server')
 // db = levelup instance or path to db
-var server = multilevel2.server(db, options)
+var server = multilevel2(db, options)
 server.listen(3000)
 ```
 
@@ -31,14 +31,11 @@ Client:
 
 ```js
 // On node client
-var multilevel2 = require('multilevel2-http')
+var multilevel2 = require('multilevel2-http/lib/client.node')
+// On browser client
+var multilevel2 = require('multilevel2-http/lib/client.browser')
 
-// When running on node use client as
-var db = multilevel2.clientNode('http://localhost:3000/')
-
-// On browser use client as
-var db = multilevel2.clientBrowser('http://localhost:3000/')
-
+var db = multilevel2('http://localhost:3000/')
 // now you have the complete levelUP api!
 // ...except for events - for those consider level and level-live-stream
 ```
