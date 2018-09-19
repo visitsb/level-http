@@ -101,7 +101,7 @@ describe('http', function () {
       request(app)
         .del('/data/foo')
         .expect(200)
-        .expect('ok')
+        // .expect('ok')
         .end(function (err) {
           request(app).get('/foo').expect(404).end(done)
         })
@@ -251,7 +251,7 @@ describe('http', function () {
         .put('/data')
         .send({ key: 'key', value: 'value' })
         .expect(200)
-        .expect('ok')
+        // .expect('ok')
         .end(function (err) {
           if (err) return done(err)
           request(app).get('/data/key').expect('value').end(done)
@@ -265,7 +265,7 @@ describe('http', function () {
         .post('/data')
         .send({ type: 'put', key: 'key', value: 'value' })
         .expect(200)
-        .expect('ok')
+        // .expect('ok')
         .end(function (err) {
           if (err) return done(err)
           setTimeout(function () {

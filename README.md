@@ -33,11 +33,11 @@ Client:
 // On node client
 var multilevel2 = require('multilevel2-http')
 
-// On browser
-var db = multilevel2.client('http://localhost:3000/')
+// When running on node use client as
+var db = multilevel2.clientNode('http://localhost:3000/')
 
-// On node client (don't forget to use - var request = require('request'))
-var db = multilevel2.client('http://localhost:3000/', request)
+// On browser use client as
+var db = multilevel2.clientBrowser('http://localhost:3000/')
 
 // now you have the complete levelUP api!
 // ...except for events - for those consider level and level-live-stream

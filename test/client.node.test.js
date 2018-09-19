@@ -1,7 +1,5 @@
 var multilevel2 = require('..')
-var request = require('request')
 var server = multilevel2.server(__dirname + '/client.test.db')
-var JSONStream = require('JSONStream')
 var should = require('should')
 var fs = require('fs.extra')
 
@@ -15,9 +13,9 @@ beforeEach(function (done) {
   })
 })
 
-var db = multilevel2.client('http://localhost:3001/', request)
+var db = multilevel2.clientNode('http://localhost:3001/')
 
-describe('client', function () {
+describe('client#node', function () {
   describe('db#put(key, value)', function () {
     it('should store text', function (done) {
       db.put('foo', 'bar', function (err) {
@@ -119,13 +117,13 @@ describe('client', function () {
     })
   })
 
-  describe('db#readStream()', function () {
+  describe('db#createReadStream()', function () {
     it('should read', function (done) {
       db.put('foo', 'bar', function (err) {
         if (err) return done(err)
         var count = 0
 
-        db.readStream()
+        db.createReadStream()
           .on('data', function (data) {
             count++
             should.exist(data)
@@ -140,9 +138,9 @@ describe('client', function () {
     })
   })
 
-  describe('db#writeStream()', function () {
+  describe('db#createWriteStream()', function () {
     it('should save', function (done) {
-      var ws = db.writeStream()
+      var ws = db.createWriteStream()
 
       ws.on('end', function () {
         db.get('key', function (err, value) {
