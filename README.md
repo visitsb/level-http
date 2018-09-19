@@ -30,11 +30,15 @@ server.listen(3000)
 Client:
 
 ```js
+// On node client
 var multilevel2 = require('multilevel2-http')
-// or
-import multilevel2 from 'multilevel2-http'
 
+// On browser
 var db = multilevel2.client('http://localhost:3000/')
+
+// On node client (don't forget to use - var request = require('request'))
+var db = multilevel2.client('http://localhost:3000/', request)
+
 // now you have the complete levelUP api!
 // ...except for events - for those consider level and level-live-stream
 ```
@@ -202,11 +206,20 @@ Start serving on the given port.
 
 The stored db and meta data exposed.
 
+## Headers
+
+By default, all requests to server are [CORS](https://github.com/expressjs/cors) enabled to '\*'.
+
+```
+Access-Control-Allow-Origin: *
+```
+
 ## TODO
 
 Most likely, the following would be upcoming in future versions-
 
 - HTTPs
+- CORS oriented security
 - Authentication
 - Events relayed to clients
 
