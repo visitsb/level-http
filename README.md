@@ -31,14 +31,20 @@ Client:
 
 ```js
 // On node client
-var multilevel2 = require('multilevel2-http/lib/client.node')
-// On browser client
-var multilevel2 = require('multilevel2-http/lib/client.browser')
+var multilevel2 = require('multilevel2-http/lib/client')
 
 var db = multilevel2('http://localhost:3000/')
 // now you have the complete levelUP api!
 // ...except for events - for those consider level and level-live-stream
+
+// Separating database into sections - or sublevels works too
+var sub = require('subleveldown')
+const test1 = sub(db('http://127.0.0.1:9000/'), 'test1')
 ```
+
+<!--
+Due to [specifics in browserifying](https://github.com/browserify/browserify/issues/332) the ubiquitous [request](https://github.com/request/request#streaming) module for browsers, while [browser-request](https://github.com/iriscouch/browser-request) works it doesn't support Stream APIs correctly. Substituting [hyperquest](https://github.com/substack/hyperquest) for Stream specific methods works, hence browser side client is kept separate from node side client.
+-->
 
 ## CLI
 
@@ -215,10 +221,12 @@ Access-Control-Allow-Origin: *
 
 Most likely, the following would be upcoming in future versions-
 
-- HTTPs
-- CORS oriented security
-- Authentication
-- Events relayed to clients
+- [ ] HTTPs
+- [ ] CORS oriented security
+- [ ] Authentication
+- [ ] Events relayed to clients
+- [x] ~~[sublevel](https://github.com/dominictarr/level-sublevel) support~~. Switching to [subleveldown](https://github.com/Level/subleveldown)
+- [ ] Client side [iterators](https://github.com/level/abstract-leveldown#iterator)
 
 ## License
 
