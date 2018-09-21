@@ -1,6 +1,6 @@
 {
   "name": "multilevel2-http",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Access a leveldb instance from multiple processes over HTTP",
   "main": "index.js",
   "scripts": {
