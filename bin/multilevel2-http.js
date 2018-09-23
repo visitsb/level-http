@@ -2,7 +2,6 @@
 
 var multilevel2 = require('../lib/server')
 var optimist = require('optimist')
-var express = require('express')
 
 var argv = optimist
   .usage('$0 [OPTIONS] path-to-db')
@@ -23,6 +22,7 @@ var argv = optimist
 
 if (argv.help || argv._.length != 1) return optimist.showHelp()
 
+// DEBUG=multilevel2-http/server will enable simplistic logging on your console
 multilevel2(argv._[0]).listen(argv.port, argv.host, function () {
   console.log(`multilevel2-http listening on ${argv.host}:${argv.port}`)
 })

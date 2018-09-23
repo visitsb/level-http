@@ -51,6 +51,10 @@ Due to [specifics in browserifying](https://github.com/browserify/browserify/iss
 ```bash
 $ sudo npm install -g multilevel2-http
 $ multilevel2-http -h 127.0.0.1 -p 3000 path/to.db
+$
+$ # Alternatively, enable debug to get a simple access log on your console
+$ # Can help understand what sort of queries are being sent to your leveldb
+$ DEBUG=multilevel2-http/server multilevel2-http -h 127.0.0.1 -p 3000 path/to.db
 ```
 
 ## HTTP API
@@ -195,7 +199,7 @@ Get all the values in the given range.
 
 ```js
 // server
-var level = require('multilevel2-http')('my.db')
+var level = require('multilevel2-http/lib/server')('my.db')
 level.listen(3000)
 ```
 

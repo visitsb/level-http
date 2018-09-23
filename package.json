@@ -1,6 +1,6 @@
 {
   "name": "multilevel2-http",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Access a leveldb instance from multiple processes over HTTP",
   "main": "index.js",
   "scripts": {
@@ -24,16 +24,15 @@
   "readmeFilename": "README.md",
   "dependencies": {
     "JSONStream": "^1.3.4",
-    "browser-request": "^0.3.3",
     "cors": "^2.8.4",
+    "debug": "^4.0.1",
     "duplexer": "^0.1.1",
     "express": "^4.16.3",
-    "hyperquest": "^2.1.3",
     "level": "^4.0.0",
     "level-writestream": "^0.1.3",
     "optimist": "^0.6.1",
-    "qs": "^6.5.2",
     "request": "^2.88.0",
+    "stream-to-array": "^2.3.0",
     "through": "^2.3.8"
   },
   "devDependencies": {
