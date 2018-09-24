@@ -1,6 +1,6 @@
 {
   "name": "multilevel2-http",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "lockfileVersion": 1,
   "requires": true,
   "dependencies": {
@@ -1271,8 +1271,7 @@
     "qs": {
       "version": "6.5.2",
       "resolved": "https://registry.npmjs.org/qs/-/qs-6.5.2.tgz",
-      "integrity": "sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA==",
-      "dev": true
+      "integrity": "sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA=="
     },
     "range-parser": {
       "version": "1.2.0",
@@ -1325,11 +1324,15 @@
       }
     },
     "readable-stream": {
-      "version": "3.0.3",
-      "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-3.0.3.tgz",
-      "integrity": "sha512-CzN1eAu5Pmh4EaDlJp1g5E37LIHR24b82XlMWRQlPFjhvOYKa4HhClRsQO21zhdDWUpdWfiKt9/L/ZL2+vwxCw==",
+      "version": "2.3.6",
+      "resolved": "http://registry.npmjs.org/readable-stream/-/readable-stream-2.3.6.tgz",
+      "integrity": "sha512-tQtKA9WIAhBF3+VLAseyMqZeBjW0AHJoxOtYqSUZNJxauErmLbVm2FW1y+J/YA9dUrAC39ITejlZWhVIwawkKw==",
       "requires": {
+        "core-util-is": "1.0.2",
         "inherits": "2.0.3",
+        "isarray": "1.0.0",
+        "process-nextick-args": "2.0.0",
+        "safe-buffer": "5.1.1",
         "string_decoder": "1.1.1",
         "util-deprecate": "1.0.2"
       }
@@ -1361,11 +1364,6 @@
         "uuid": "3.3.2"
       },
       "dependencies": {
-        "qs": {
-          "version": "6.5.2",
-          "resolved": "https://registry.npmjs.org/qs/-/qs-6.5.2.tgz",
-          "integrity": "sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA=="
-        },
         "safe-buffer": {
           "version": "5.1.2",
           "resolved": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.1.2.tgz",
