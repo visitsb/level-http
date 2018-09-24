@@ -63,6 +63,22 @@
       "requires": {
         "delegates": "1.0.0",
         "readable-stream": "2.3.6"
+      },
+      "dependencies": {
+        "readable-stream": {
+          "version": "2.3.6",
+          "resolved": "http://registry.npmjs.org/readable-stream/-/readable-stream-2.3.6.tgz",
+          "integrity": "sha512-tQtKA9WIAhBF3+VLAseyMqZeBjW0AHJoxOtYqSUZNJxauErmLbVm2FW1y+J/YA9dUrAC39ITejlZWhVIwawkKw==",
+          "requires": {
+            "core-util-is": "1.0.2",
+            "inherits": "2.0.3",
+            "isarray": "1.0.0",
+            "process-nextick-args": "2.0.0",
+            "safe-buffer": "5.1.1",
+            "string_decoder": "1.1.1",
+            "util-deprecate": "1.0.2"
+          }
+        }
       }
     },
     "array-flatten": {
@@ -130,6 +146,22 @@
       "requires": {
         "readable-stream": "2.3.6",
         "safe-buffer": "5.1.1"
+      },
+      "dependencies": {
+        "readable-stream": {
+          "version": "2.3.6",
+          "resolved": "http://registry.npmjs.org/readable-stream/-/readable-stream-2.3.6.tgz",
+          "integrity": "sha512-tQtKA9WIAhBF3+VLAseyMqZeBjW0AHJoxOtYqSUZNJxauErmLbVm2FW1y+J/YA9dUrAC39ITejlZWhVIwawkKw==",
+          "requires": {
+            "core-util-is": "1.0.2",
+            "inherits": "2.0.3",
+            "isarray": "1.0.0",
+            "process-nextick-args": "2.0.0",
+            "safe-buffer": "5.1.1",
+            "string_decoder": "1.1.1",
+            "util-deprecate": "1.0.2"
+          }
+        }
       }
     },
     "body-parser": {
@@ -264,6 +296,22 @@
         "inherits": "2.0.3",
         "readable-stream": "2.3.6",
         "typedarray": "0.0.6"
+      },
+      "dependencies": {
+        "readable-stream": {
+          "version": "2.3.6",
+          "resolved": "http://registry.npmjs.org/readable-stream/-/readable-stream-2.3.6.tgz",
+          "integrity": "sha512-tQtKA9WIAhBF3+VLAseyMqZeBjW0AHJoxOtYqSUZNJxauErmLbVm2FW1y+J/YA9dUrAC39ITejlZWhVIwawkKw==",
+          "requires": {
+            "core-util-is": "1.0.2",
+            "inherits": "2.0.3",
+            "isarray": "1.0.0",
+            "process-nextick-args": "2.0.0",
+            "safe-buffer": "5.1.1",
+            "string_decoder": "1.1.1",
+            "util-deprecate": "1.0.2"
+          }
+        }
       }
     },
     "console-control-strings": {
@@ -918,6 +966,22 @@
             "inherits": "2.0.3",
             "readable-stream": "2.3.6",
             "xtend": "4.0.1"
+          },
+          "dependencies": {
+            "readable-stream": {
+              "version": "2.3.6",
+              "resolved": "http://registry.npmjs.org/readable-stream/-/readable-stream-2.3.6.tgz",
+              "integrity": "sha512-tQtKA9WIAhBF3+VLAseyMqZeBjW0AHJoxOtYqSUZNJxauErmLbVm2FW1y+J/YA9dUrAC39ITejlZWhVIwawkKw==",
+              "requires": {
+                "core-util-is": "1.0.2",
+                "inherits": "2.0.3",
+                "isarray": "1.0.0",
+                "process-nextick-args": "2.0.0",
+                "safe-buffer": "5.1.1",
+                "string_decoder": "1.1.1",
+                "util-deprecate": "1.0.2"
+              }
+            }
           }
         }
       }
@@ -1261,15 +1325,11 @@
       }
     },
     "readable-stream": {
-      "version": "2.3.6",
-      "resolved": "http://registry.npmjs.org/readable-stream/-/readable-stream-2.3.6.tgz",
-      "integrity": "sha512-tQtKA9WIAhBF3+VLAseyMqZeBjW0AHJoxOtYqSUZNJxauErmLbVm2FW1y+J/YA9dUrAC39ITejlZWhVIwawkKw==",
+      "version": "3.0.3",
+      "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-3.0.3.tgz",
+      "integrity": "sha512-CzN1eAu5Pmh4EaDlJp1g5E37LIHR24b82XlMWRQlPFjhvOYKa4HhClRsQO21zhdDWUpdWfiKt9/L/ZL2+vwxCw==",
       "requires": {
-        "core-util-is": "1.0.2",
         "inherits": "2.0.3",
-        "isarray": "1.0.0",
-        "process-nextick-args": "2.0.0",
-        "safe-buffer": "5.1.1",
         "string_decoder": "1.1.1",
         "util-deprecate": "1.0.2"
       }
@@ -1551,6 +1611,21 @@
           "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.1.tgz",
           "integrity": "sha512-tgp+dl5cGk28utYktBsrFqA7HKgrhgPsg6Z/EfhWI4gl1Hwq8B/GmY/0oXZ6nF8hDVesS/FpnYaD/kOWhYQvyg==",
           "dev": true
+        },
+        "readable-stream": {
+          "version": "2.3.6",
+          "resolved": "http://registry.npmjs.org/readable-stream/-/readable-stream-2.3.6.tgz",
+          "integrity": "sha512-tQtKA9WIAhBF3+VLAseyMqZeBjW0AHJoxOtYqSUZNJxauErmLbVm2FW1y+J/YA9dUrAC39ITejlZWhVIwawkKw==",
+          "dev": true,
+          "requires": {
+            "core-util-is": "1.0.2",
+            "inherits": "2.0.3",
+            "isarray": "1.0.0",
+            "process-nextick-args": "2.0.0",
+            "safe-buffer": "5.1.1",
+            "string_decoder": "1.1.1",
+            "util-deprecate": "1.0.2"
+          }
         }
       }
     },
@@ -1607,6 +1682,22 @@
         "readable-stream": "2.3.6",
         "to-buffer": "1.1.1",
         "xtend": "4.0.1"
+      },
+      "dependencies": {
+        "readable-stream": {
+          "version": "2.3.6",
+          "resolved": "http://registry.npmjs.org/readable-stream/-/readable-stream-2.3.6.tgz",
+          "integrity": "sha512-tQtKA9WIAhBF3+VLAseyMqZeBjW0AHJoxOtYqSUZNJxauErmLbVm2FW1y+J/YA9dUrAC39ITejlZWhVIwawkKw==",
+          "requires": {
+            "core-util-is": "1.0.2",
+            "inherits": "2.0.3",
+            "isarray": "1.0.0",
+            "process-nextick-args": "2.0.0",
+            "safe-buffer": "5.1.1",
+            "string_decoder": "1.1.1",
+            "util-deprecate": "1.0.2"
+          }
+        }
       }
     },
     "through": {

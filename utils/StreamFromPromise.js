@@ -1,5 +1,6 @@
 'use strict'
-var Readable = require('stream').Readable
+
+var Readable = require('readable-stream').Readable
 var inherits = require('util').inherits
 
 // Borrowed from stream-from-promise except that it doesn't
