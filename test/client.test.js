@@ -21,10 +21,8 @@ describe('client', function () {
     it('should store text', function (done) {
       db.put('foo', 'bar', function (err) {
         if (err) return done(err)
-
         db.get('foo', function (err, value) {
           if (err) return done(err)
-
           should.exist(value)
           value.should.equal('bar')
           done()
@@ -59,10 +57,8 @@ describe('client', function () {
     it('should get', function (done) {
       db.put('foo', 'bar', function (err) {
         if (err) return done(err)
-
         db.get('foo', function (err, value) {
           if (err) return done(err)
-
           should.exist(value)
           value.should.equal('bar')
           done()
@@ -75,10 +71,8 @@ describe('client', function () {
     it('should delete', function (done) {
       db.put('foo', 'bar', function (err) {
         if (err) return done(err)
-
         db.del('foo', function (err) {
           if (err) return done(err)
-
           db.get('foo', function (err, value) {
             should.exist(err)
             should.not.exist(value)
@@ -95,10 +89,8 @@ describe('client', function () {
         { type: 'put', key: 'key', value: 'value' }
       ], function (err) {
         if (err) return done(err)
-
         db.get('key', function (err, value) {
           if (err) return done(err)
-
           should.exist(value)
           value.should.equal('value')
           done()
@@ -123,7 +115,6 @@ describe('client', function () {
       db.put('foo', 'bar', function (err) {
         if (err) return done(err)
         var count = 0
-
         db.createReadStream()
           .on('data', function (data) {
             count++
@@ -142,7 +133,6 @@ describe('client', function () {
   describe('db#createWriteStream()', function () {
     it('should save', function (done) {
       var ws = db.createWriteStream()
-
       ws.on('end', function () {
         db.get('key', function (err, value) {
           if (err) return done(err)
@@ -151,7 +141,6 @@ describe('client', function () {
           done()
         })
       })
-
       ws.write({ key: 'key', value: 'value' })
       ws.end()
     })

@@ -5,15 +5,17 @@
     if (!(_self instanceof ActionablePromise)) return new ActionablePromise()
 
     var opts = {}
-    _self.await = new Promise((resolve, reject) => { opts = { resolve, reject } })
+    var promise = new Promise((resolve, reject) => { opts = { resolve, reject } })
 
     // Expose captured methods so that these are invokable outside the Promise
     _self.resolve = opts.resolve
+    _self.then = promise.then.bind(promise)
     _self.reject = opts.reject
+    _self.catch = promise.catch.bind(promise)
 
     // API
-    // Use ActionablePromise.await.then() to wait for promise to resolve - Consumers use this
-    // From outside, ActionablePromise.resolve() to resolve by passing value to consume - Producers use this
+    // Use ActionablePromise.then() to wait for promise to resolve (or catch if error) - Consumers use this
+    // From outside, ActionablePromise.resolve() (or reject() if cannot resolve) to value (or error) to consume - Producers use this
     return _self
   }
 
@@ -36,23 +38,23 @@
       queue.read.push(later)
     }
 
-    function write(done = false) {
+    function write(value, done = false) {
       var data = queue.write.shift()
       if (!done && (0 === queue.write.length)) prepare()
-      return data
+      return data.resolve(value)
     }
 
-    function read() {
+    function read(cb) {
       var data = queue.read.shift()
-      return data
+      return data.then(cb)
     }
 
     // Initialize
     prepare()
 
     // API
-    // `write` will return an ActionablePromise that can be `resolve`d() with value that is ready to read
-    // `read` will return an ActionablePromise on which reader can `await` and `then` read value that was written
+    // `write` will `resolve` an ActionablePromise with value that is ready to read
+    // `read` will `then` return value that was written
     return { write, read }
   }
 

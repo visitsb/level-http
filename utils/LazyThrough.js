@@ -16,7 +16,7 @@ function LazyThrough(options) {
   // flowing or paused mode as requested
   // Achieved by using Promises that allow coordination between
   // writer, reader
-  _self.__data = PromisifiedQueue()
+  _self.data = PromisifiedQueue()
 
   // Some libraries depend on this event to be raised
   // hence whenever there is no more data or an error
@@ -58,12 +58,11 @@ LazyThrough.prototype._read = function (size) {
 
   // Consume one entry in data (array)
   // wait if needed and then push it for reading when available
-  _self.__data.read()
-    .await.then((chunk) => {
-      if (chunk === done) return _self.push(done)
-      // https://nodejs.org/api/stream.html#stream_readable_push_chunk_encoding
-      if (!_self.push(chunk)) return _self.push(done)
-    })
+  _self.data.read((chunk) => {
+    if (chunk === done) return _self.push(done)
+    // https://nodejs.org/api/stream.html#stream_readable_push_chunk_encoding
+    if (!_self.push(chunk)) return _self.push(done)
+  })
 }
 
 // https://nodejs.org/api/stream.html#stream_api_for_stream_implementers
@@ -72,7 +71,7 @@ LazyThrough.prototype._write = function (data, encoding, callback) {
   const _self = this
   const chunks = [].concat(data)
 
-  chunks.forEach(chunk => _self.__data.write().resolve(chunk))
+  chunks.forEach((chunk) => _self.data.write(chunk))
   callback()
 }
 
@@ -83,7 +82,7 @@ LazyThrough.prototype._writev = function (datas, callback) {
 
   datas.forEach(data => {
     const chunks = [].concat(data)
-    chunks.forEach(chunk => _self.__data.write().resolve(chunk))
+    chunks.forEach((chunk) => _self.data.write(chunk))
   })
 
   callback()
@@ -97,7 +96,7 @@ LazyThrough.prototype._final = function (callback) {
   const done = null
 
   // Signal the final value
-  _self.__data.write().resolve(done)
+  _self.data.write(done)
   callback()
 }
 

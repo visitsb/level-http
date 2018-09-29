@@ -52,7 +52,6 @@ describe('http', function () {
     it('should get json', function (done) {
       app.db.put('json', { some: 'json' }, { encoding: 'json' }, function (err) {
         if (err) return done(err)
-
         request(app)
           .get('/data/json?encoding=json')
           .expect(200)
@@ -85,7 +84,6 @@ describe('http', function () {
         .send({ some: 'json' })
         .end(function (err) {
           if (err) return done(err)
-
           app.db.get('json', { encoding: 'json' }, function (err, value) {
             if (err) return done(err)
             should.exist(value)

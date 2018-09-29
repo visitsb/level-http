@@ -230,7 +230,8 @@ Most likely, the following would be upcoming in future versions-
 - [ ] Authentication
 - [ ] Events relayed to clients
 - [x] ~~[sublevel](https://github.com/dominictarr/level-sublevel) support~~. Switching to [subleveldown](https://github.com/Level/subleveldown)
-- [ ] Client side [iterators](https://github.com/level/abstract-leveldown#iterator)
+- [x] Client side [iterators](https://github.com/level/abstract-leveldown#iterator)
+- [ ]
 
 ## License
 
