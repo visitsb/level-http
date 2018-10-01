@@ -8,9 +8,9 @@
     var promise = new Promise((resolve, reject) => { opts = { resolve, reject } })
 
     // Expose captured methods so that these are invokable outside the Promise
-    _self.resolve = opts.resolve
+    _self.resolve = opts.resolve.bind(promise)
     _self.then = promise.then.bind(promise)
-    _self.reject = opts.reject
+    _self.reject = opts.reject.bind(promise)
     _self.catch = promise.catch.bind(promise)
 
     // API
@@ -39,14 +39,29 @@
     }
 
     function write(value, done = false) {
-      var data = queue.write.shift()
+      var promise = queue.write.shift()
       if (!done && (0 === queue.write.length)) prepare()
-      return data.resolve(value)
+      return promise.resolve(value)
+    }
+
+    function fail(err, done = false) {
+      var promise = queue.write.shift()
+      if (!done && (0 === queue.write.length)) prepare()
+      return promise.reject(err)
     }
 
     function read(cb) {
-      var data = queue.read.shift()
-      return data.then(cb)
+      var promise = queue.read.shift()
+      promise.failed = promise.catch // Provide chainable method for API
+      process.nextTick(promise.then.bind(promise, cb))
+      return promise
+    }
+
+    function failed(cb) {
+      var promise = queue.read.shift()
+      promise.read = promise.then // Provide chainable method for API
+      process.nextTick(promise.catch.bind(promise, cb))
+      return promise
     }
 
     // Initialize
@@ -54,8 +69,10 @@
 
     // API
     // `write` will `resolve` an ActionablePromise with value that is ready to read
-    // `read` will `then` return value that was written
-    return { write, read }
+    // `fail` will `reject` an ActionablePromise with error that is ready to read
+    // `read` will `then` return value that was written (should be chained to .failed() if err is handled)
+    // `failed` will `catch` error that was written (should be chained to .read() if value is read)
+    return { write, read, fail, failed }
   }
 
   module.exports = exports = { ActionablePromise, PromisifiedQueue }

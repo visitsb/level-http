@@ -58,11 +58,13 @@ LazyThrough.prototype._read = function (size) {
 
   // Consume one entry in data (array)
   // wait if needed and then push it for reading when available
-  _self.data.read((chunk) => {
-    if (chunk === done) return _self.push(done)
-    // https://nodejs.org/api/stream.html#stream_readable_push_chunk_encoding
-    if (!_self.push(chunk)) return _self.push(done)
-  })
+  _self.data
+    .read((chunk) => {
+      if (chunk === done) return _self.push(done)
+      // https://nodejs.org/api/stream.html#stream_readable_push_chunk_encoding
+      if (!_self.push(chunk)) return _self.push(done)
+    })
+    .failed((err) => _self.done())
 }
 
 // https://nodejs.org/api/stream.html#stream_api_for_stream_implementers

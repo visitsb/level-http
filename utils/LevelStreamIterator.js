@@ -48,17 +48,19 @@ inherits(LevelStreamIterator, AbstractIterator)
 LevelStreamIterator.prototype._next = function (cb) {
   const _self = this
 
-  _self.data.read((data) => {
-    // If the iterator has reached its end, both key and value will be undefined
-    if (data === null) return cb(null, undefined, undefined)
+  _self.data
+    .read((data) => {
+      // If the iterator has reached its end, both key and value will be undefined
+      if (data === null) return cb(null, undefined, undefined)
 
-    // The type of key and value depends on the options passed to db.iterator().
-    data.key = _self.keys ? data.key : undefined
-    data.value = _self.values ? data.value : undefined
+      // The type of key and value depends on the options passed to db.iterator().
+      data.key = _self.keys ? data.key : undefined
+      data.value = _self.values ? data.value : undefined
 
-    // Otherwise, the callback receives null, a key and a value.
-    return cb(null, data.key, data.value)
-  }) //.catch((err) => _self.end(cb.bind(_self, err)))
+      // Otherwise, the callback receives null, a key and a value.
+      return cb(null, data.key, data.value)
+    })
+    .failed((err) => _self.end(cb.bind(_self, err)))
 }
 
 LevelStreamIterator.prototype._end = (cb) => cb()

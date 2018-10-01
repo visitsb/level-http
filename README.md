@@ -38,8 +38,12 @@ var db = multilevel2('http://localhost:3000/')
 // ...except for events - for those consider level and level-live-stream
 
 // Separating database into sections - or sublevels works too
+// Use opts to specify keyEncoding, valueEncoding as appropriate for your leveldb
 var sub = require('subleveldown')
-const test1 = sub(db('http://127.0.0.1:9000/'), 'test1')
+const test1 = sub(db('http://127.0.0.1:9000/'), opts, 'test1')
+// -or-
+var sub = require('level-sublevel')
+const test1 = sub(db('http://127.0.0.1:9000/'), opts).sublevel('test1')
 ```
 
 <!--
@@ -229,9 +233,8 @@ Most likely, the following would be upcoming in future versions-
 - [ ] CORS oriented security
 - [ ] Authentication
 - [ ] Events relayed to clients
-- [x] ~~[sublevel](https://github.com/dominictarr/level-sublevel) support~~. Switching to [subleveldown](https://github.com/Level/subleveldown)
-- [x] Client side [iterators](https://github.com/level/abstract-leveldown#iterator)
-- [ ]
+- [x] ~~[sublevel](https://github.com/dominictarr/level-sublevel) support~~. Supports [subleveldown](https://github.com/Level/subleveldown) and [level-sublevel](https://github.com/dominictarr/level-sublevel)
+- [x] ~~Client side [iterators](https://github.com/level/abstract-leveldown#iterator)~~
 
 ## License
 
