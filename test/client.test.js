@@ -1,22 +1,25 @@
 var multilevel2 = require('../lib/server')
 var client = require('../lib/client')
-var server = multilevel2(__dirname + '/client.test.db')
+var server = multilevel2(__dirname + '/client.test.db', { username: 'client-test', password: 'client' })
 var should = require('should')
 var fs = require('fs.extra')
 
 server.listen(3001)
-
-beforeEach(function (done) {
-  server.db.close().then(() => {
-    fs.rmrf(__dirname + '/client.test.db', function () {
-      server.db.open().then(() => done())
-    })
-  })
-})
-
-var db = client('http://localhost:3001/')
+var db = client('http://localhost:3001/', { username: 'client-test', password: 'client' })
 
 describe('client', function () {
+  beforeEach(function (done) {
+    if (server.db.isOpen()) return process.nextTick(() => db.open(done))
+    server.db.open().then(() => db.open(done))
+  })
+
+  afterEach((done) => {
+    if (server.db.isClosed()) return process.nextTick(() => db.close(done))
+    server.db.close().then(() => {
+      fs.rmrf(__dirname + '/client.test.db', () => db.close(done))
+    })
+  })
+
   describe('db#put(key, value)', function () {
     it('should store text', function (done) {
       db.put('foo', 'bar', function (err) {

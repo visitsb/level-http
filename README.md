@@ -1,8 +1,8 @@
 # multilevel2-http
 
-_Access a leveldb instance from multiple processes over HTTP._
+_Access a leveldb instance from multiple processes over HTTP under secure credentials._
 
-A limitation of LevelDB is that only one process is allowed access to the underlying data. **multilevel2-http** exports a LevelDB instance over http.
+A limitation of LevelDB is that only one process is allowed access to the underlying data. **multilevel2-http** exports a LevelDB instance over http. Furthermore, it also allows your LevelDB instance to be exposed with credentials to allow operations under logged in user.
 
 Credits go to the [original project](https://github.com/juliangruber/multimultilevel2-http). The project is updated to work with latest version of [Level](https://github.com/Level/level) and [NodeJS](https://nodejs.org/en/) with a few minor tweaks.
 
@@ -23,7 +23,9 @@ Server:
 ```js
 var multilevel2 = require('multilevel2-http/lib/server')
 // db = levelup instance or path to db
-var server = multilevel2(db, options)
+// opts.username = (Optional) Username who will be allowed to login to this server using multilevel2 client. Username will default to user as returned by process.env.USER
+// opts.password = (Optional) Password for user who will be allowed to login to this server using multilevel2 client. Password will default to process.env.PASS if specified or if not available it will be 'test'
+var server = multilevel2(db, opts)
 server.listen(3000)
 ```
 
@@ -33,7 +35,13 @@ Client:
 // On node client
 var multilevel2 = require('multilevel2-http/lib/client')
 
-var db = multilevel2('http://localhost:3000/')
+// Use opts to pass options to underlying multilevel2 server
+// opts.username = Specify username to login to multilevel2 server
+// opts.password = Specify password to login to multilevel2 server
+var db = multilevel2('http://localhost:3000/', [opts])
+// opts can be also specified with username, password when opening the client to connect to multilevel2 server
+db.open([opts])
+
 // now you have the complete levelUP api!
 // ...except for events - for those consider level and level-live-stream
 
@@ -41,9 +49,12 @@ var db = multilevel2('http://localhost:3000/')
 // Use opts to specify keyEncoding, valueEncoding as appropriate for your leveldb
 var sub = require('subleveldown')
 const test1 = sub(db('http://127.0.0.1:9000/'), opts, 'test1')
+test1.open([opts])
+
 // -or-
 var sub = require('level-sublevel')
 const test1 = sub(db('http://127.0.0.1:9000/'), opts).sublevel('test1')
+test1.open([opts])
 ```
 
 <!--
@@ -54,11 +65,11 @@ Due to [specifics in browserifying](https://github.com/browserify/browserify/iss
 
 ```bash
 $ sudo npm install -g multilevel2-http
-$ multilevel2-http -h 127.0.0.1 -p 3000 path/to.db
+$ multilevel2-http -h 127.0.0.1 -P 3000 -u user -p pass path/to.db
 $
 $ # Alternatively, enable debug to get a simple access log on your console
 $ # Can help understand what sort of queries are being sent to your leveldb
-$ DEBUG=multilevel2-http/server multilevel2-http -h 127.0.0.1 -p 3000 path/to.db
+$ DEBUG=multilevel2-http/server multilevel2-http -h 127.0.0.1 -P 3000 -u user -p pass path/to.db
 ```
 
 ## HTTP API
@@ -231,7 +242,7 @@ Most likely, the following would be upcoming in future versions-
 
 - [ ] HTTPs
 - [ ] CORS oriented security
-- [ ] Authentication
+- [x] Authentication using [Passport](https://github.com/jaredhanson/passport) with [Local](https://github.com/jaredhanson/passport-local) strategy using Cookies (automatically set to [secure](https://github.com/expressjs/session#cookiesecure) if behind HTTPs)
 - [ ] Events relayed to clients
 - [x] ~~[sublevel](https://github.com/dominictarr/level-sublevel) support~~. Supports [subleveldown](https://github.com/Level/subleveldown) and [level-sublevel](https://github.com/dominictarr/level-sublevel)
 - [x] ~~Client side [iterators](https://github.com/level/abstract-leveldown#iterator)~~
