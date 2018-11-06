@@ -5,7 +5,10 @@ var should = require('should')
 var fs = require('fs.extra')
 
 server.listen(3001)
-var db = client('http://localhost:3001/', { username: 'client-test', password: 'client' })
+
+let username = 'client-test'
+let password = 'client'
+var db = client('http://localhost:3001/', { username, password })
 
 describe('client', function () {
   beforeEach(function (done) {

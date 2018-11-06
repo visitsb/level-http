@@ -4,25 +4,20 @@ const fs = require('fs.extra')
 const multilevel2 = require('../lib/server')
 
 describe('http', function () {
-  let app
-  // Since server works on Cookie based authentication
-  // this is simple approach - https://stackoverflow.com/a/38234070
-  // Neither supertest.agent() nor plain superagent() worked
-  let cookie
+  let app = null
+  let username = 'server-test'
+  let password = 'server'
 
   beforeEach(function (done) {
-    app = multilevel2(__dirname + '/server.test.db', { username: 'server-test', password: 'server' }, { some: 'meta' })
+    app = multilevel2(__dirname + '/server.test.db', { username, password }, { some: 'meta' })
     request(app)
       .post('/login')
-      .type('form')
-      .send({ username: 'server-test' })
-      .send({ password: 'server' })
+      .auth(username, password)
       .then((res) => {
-        cookie = res.header['set-cookie']
         Promise.all([
-            app.db.put('foo', 'bar'),
-            app.db.put('bar', 'foo')
-          ])
+          app.db.put('foo', 'bar'),
+          app.db.put('bar', 'foo')
+        ])
           .then(() => done())
       })
   })
@@ -30,10 +25,8 @@ describe('http', function () {
   afterEach(function (done) {
     request(app)
       .post('/logout')
-      .set('Cookie', cookie)
-      .type('form')
+      .auth(username, password)
       .then((res) => {
-        cookie = res.header['set-cookie']
         app.db.close()
           .then(() => fs.rmrf(__dirname + '/server.test.db', done))
       })
@@ -43,7 +36,7 @@ describe('http', function () {
     it('should send meta', function (done) {
       request(app)
         .get('/meta')
-        .set('Cookie', cookie)
+        .auth(username, password)
         .expect('Content-Type', /json/)
         .expect(200)
         .end(function (err, res) {
@@ -61,7 +54,7 @@ describe('http', function () {
     it('should get text', function (done) {
       request(app)
         .get('/data/foo')
-        .set('Cookie', cookie)
+        .auth(username, password)
         .expect('bar', done)
     })
 
@@ -70,7 +63,7 @@ describe('http', function () {
         if (err) return done(err)
         request(app)
           .get('/data/json?encoding=json')
-          .set('Cookie', cookie)
+          .auth(username, password)
           .expect(200)
           .expect({ some: 'json' }, done)
       })
@@ -79,7 +72,7 @@ describe('http', function () {
     it('should respond with 404', function (done) {
       request(app)
         .get('/data/baz')
-        .set('Cookie', cookie)
+        .auth(username, password)
         .expect(404)
         .expect(/not found/, done)
     })
@@ -89,14 +82,14 @@ describe('http', function () {
     it('should save text', function (done) {
       request(app)
         .post('/data/foo')
-        .set('Cookie', cookie)
+        .auth(username, password)
         .type('text')
         .send('changed')
         .end(function (err) {
           if (err) return done(err)
           request(app)
             .get('/data/foo')
-            .set('Cookie', cookie)
+            .auth(username, password)
             .expect('changed')
             .end(done)
         })
@@ -105,7 +98,7 @@ describe('http', function () {
     it('should save json', function (done) {
       request(app)
         .post('/data/json?encoding=json')
-        .set('Cookie', cookie)
+        .auth(username, password)
         .type('json')
         .send({ some: 'json' })
         .end(function (err) {
@@ -124,13 +117,13 @@ describe('http', function () {
     it('should delete', function (done) {
       request(app)
         .del('/data/foo')
-        .set('Cookie', cookie)
+        .auth(username, password)
         .expect(200)
         .expect(JSON.stringify('ok'))
         .end(function (err) {
           request(app)
             .get('/foo')
-            .set('Cookie', cookie)
+            .auth(username, password)
             .expect(404)
             .end(done)
         })
@@ -141,7 +134,7 @@ describe('http', function () {
     it('should get a size', function (done) {
       request(app)
         .get('/approximateSize/a..z')
-        .set('Cookie', cookie)
+        .auth(username, password)
         .expect(200)
         .expect('0', done)
     })
@@ -151,7 +144,7 @@ describe('http', function () {
     it('should get all', function (done) {
       request(app)
         .get('/data')
-        .set('Cookie', cookie)
+        .auth(username, password)
         .expect(200)
         .end(function (err, res) {
           if (err) return done(err)
@@ -164,7 +157,7 @@ describe('http', function () {
     it('should limit', function (done) {
       request(app)
         .get('/data?limit=1')
-        .set('Cookie', cookie)
+        .auth(username, password)
         .expect(200)
         .end(function (err, res) {
           if (err) return done(err)
@@ -179,7 +172,7 @@ describe('http', function () {
     it('should get data', function (done) {
       request(app)
         .get('/range/a..z')
-        .set('Cookie', cookie)
+        .auth(username, password)
         .expect(200)
         .end(function (err, res) {
           if (err) return done(err)
@@ -192,7 +185,7 @@ describe('http', function () {
     it('should limit', function (done) {
       request(app)
         .get('/range/a..z?limit=1')
-        .set('Cookie', cookie)
+        .auth(username, password)
         .expect(200)
         .end(function (err, res) {
           if (err) return done(err)
@@ -207,7 +200,7 @@ describe('http', function () {
     it('should get values', function (done) {
       request(app)
         .get('/values')
-        .set('Cookie', cookie)
+        .auth(username, password)
         .expect(200)
         .end(function (err, res) {
           if (err) return done(err)
@@ -220,7 +213,7 @@ describe('http', function () {
     it('should limit', function (done) {
       request(app)
         .get('/values?limit=1')
-        .set('Cookie', cookie)
+        .auth(username, password)
         .expect(200)
         .end(function (err, res) {
           if (err) return done(err)
@@ -233,7 +226,7 @@ describe('http', function () {
     it('should get a range', function (done) {
       request(app)
         .get('/values/0..z?limit=1')
-        .set('Cookie', cookie)
+        .auth(username, password)
         .expect(200)
         .end(function (err, res) {
           if (err) return done(err)
@@ -248,7 +241,7 @@ describe('http', function () {
     it('should get keys', function (done) {
       request(app)
         .get('/keys')
-        .set('Cookie', cookie)
+        .auth(username, password)
         .expect(200)
         .end(function (err, res) {
           if (err) return done(err)
@@ -261,7 +254,7 @@ describe('http', function () {
     it('should limit', function (done) {
       request(app)
         .get('/keys?limit=1')
-        .set('Cookie', cookie)
+        .auth(username, password)
         .expect(200)
         .end(function (err, res) {
           if (err) return done(err)
@@ -274,7 +267,7 @@ describe('http', function () {
     it('should get a range', function (done) {
       request(app)
         .get('/keys/0..z?limit=1')
-        .set('Cookie', cookie)
+        .auth(username, password)
         .expect(200)
         .end(function (err, res) {
           if (err) return done(err)
@@ -289,7 +282,7 @@ describe('http', function () {
     it('should save', function (done) {
       request(app)
         .put('/data')
-        .set('Cookie', cookie)
+        .auth(username, password)
         .send({ key: 'key', value: 'value' })
         .expect(200)
         .expect(JSON.stringify('ok'))
@@ -297,7 +290,7 @@ describe('http', function () {
           if (err) return done(err)
           request(app)
             .get('/data/key')
-            .set('Cookie', cookie)
+            .auth(username, password)
             .expect('value')
             .end(done)
         })
@@ -308,7 +301,7 @@ describe('http', function () {
     it('should save', function (done) {
       request(app)
         .post('/data')
-        .set('Cookie', cookie)
+        .auth(username, password)
         .send({ type: 'put', key: 'key', value: 'value' })
         .expect(200)
         .expect(JSON.stringify('ok'))
@@ -317,7 +310,7 @@ describe('http', function () {
           setTimeout(function () {
             request(app)
               .get('/data/key')
-              .set('Cookie', cookie)
+              .auth(username, password)
               .expect('value')
               .end(done)
           }, 10)

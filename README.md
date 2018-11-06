@@ -242,7 +242,7 @@ Most likely, the following would be upcoming in future versions-
 
 - [ ] HTTPs
 - [ ] CORS oriented security
-- [x] Authentication using [Passport](https://github.com/jaredhanson/passport) with [Local](https://github.com/jaredhanson/passport-local) strategy using Cookies (automatically set to [secure](https://github.com/expressjs/session#cookiesecure) if behind HTTPs)
+- [x] Authentication using [Passport](https://github.com/jaredhanson/passport) with [Basic](https://github.com/jaredhanson/passport-http) strategy without using sessions to avoid cookies. Username, password passed for each API hence recommended to always run behind HTTPs
 - [ ] Events relayed to clients
 - [x] ~~[sublevel](https://github.com/dominictarr/level-sublevel) support~~. Supports [subleveldown](https://github.com/Level/subleveldown) and [level-sublevel](https://github.com/dominictarr/level-sublevel)
 - [x] ~~Client side [iterators](https://github.com/level/abstract-leveldown#iterator)~~
