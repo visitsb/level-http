@@ -16,6 +16,9 @@ Credits go to the [original project](https://github.com/juliangruber/multimultil
 npm install multilevel2-http
 ```
 
+## Installation Alternative (Docker)
+You can avoid installation, and instead use [docker image](https://hub.docker.com/r/visitsb/multilevel2-http-server)  as part of your docker stack directly from Docker Hub.
+
 ## API
 
 Server:
